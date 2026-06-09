@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+}
+
+.container {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.container.wide {
+    max-width: 1180px;
+}
+
+h1 {
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #4b5563;
+    margin-bottom: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 22px;
+    cursor: pointer;
+    color: white;
+    background: #2563eb;
+    border: none;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.messages {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.result-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
