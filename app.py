@@ -25,12 +25,12 @@ app.config["RECAPTCHA_SECRET_KEY"] = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 
 
 def allowed_file(filename):
-    """Проверяет, является ли файл изображением допустимого формата."""
+    """Проверяет, является ли файл изображением допустимого формата"""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def verify_recaptcha(response_token):
-    """Проверяет Google reCAPTCHA через официальный сервер проверки."""
+    """Проверяет Google reCAPTCHA"""
     if not response_token:
         return False
 
@@ -70,7 +70,7 @@ def denoise_image(image, method, smoothing_parameter):
 
 
 def build_histogram_chart(histograms, title, output_path, channel_names):
-    """Рисует простой график-гистограмму средствами Pillow без matplotlib и numpy."""
+    """Рисует простой график-гистограмму средствами Pillow"""
     width, height = 850, 520
     left, top, right, bottom = 80, 60, 40, 70
     plot_width = width - left - right
@@ -108,7 +108,7 @@ def build_histogram_chart(histograms, title, output_path, channel_names):
 
 
 def save_color_distribution(image, output_path):
-    """Строит график распределения цветов RGB."""
+    """Строит график распределения цветов RGB"""
     red_channel, green_channel, blue_channel = image.split()
     histograms = [
         red_channel.histogram(),
@@ -125,7 +125,7 @@ def save_color_distribution(image, output_path):
 
 
 def save_noise_distribution(original_image, filtered_image, noise_map_path, noise_histogram_path):
-    """Создает карту шума и график распределения шума."""
+    """Создает карту шума и график распределения шума"""
     noise_map = ImageChops.difference(original_image, filtered_image)
     noise_map.save(noise_map_path)
 
