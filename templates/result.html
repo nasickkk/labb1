@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Результат обработки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container wide">
+    <h1>Результат обработки</h1>
+    <p class="subtitle">Метод: {{ method }}, параметр сглаживания: {{ smoothing_parameter }}</p>
+    <a class="back" href="{{ url_for('index') }}">Обработать другое изображение</a>
+
+    <div class="grid">
+        <section class="card result-card">
+            <h2>Исходное изображение</h2>
+            <img src="{{ original_image }}" alt="Исходное изображение">
+        </section>
+
+        <section class="card result-card">
+            <h2>Обработанное изображение</h2>
+            <img src="{{ filtered_image }}" alt="Обработанное изображение">
+        </section>
+
+        <section class="card result-card">
+            <h2>Карта шума</h2>
+            <img src="{{ noise_map }}" alt="Карта шума">
+        </section>
+
+        <section class="card result-card">
+            <h2>График распределения цветов</h2>
+            <img src="{{ color_histogram }}" alt="График распределения цветов">
+        </section>
+
+        <section class="card result-card">
+            <h2>График распределения шума</h2>
+            <img src="{{ noise_histogram }}" alt="График распределения шума">
+        </section>
+    </div>
+</div>
+</body>
+</html>

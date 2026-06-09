@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>ЛР 1. Вариант 1</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Обработка изображения</h1>
+    <p class="subtitle">Лабораторная работа №1. Вариант 1: устранение шума изображения.</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="post" enctype="multipart/form-data" class="card">
+        <label>Загрузите изображение</label>
+        <input type="file" name="image" accept="image/*" required>
+
+        <label>Метод фильтрации</label>
+        <select name="method">
+            <option value="gaussian">Гауссов фильтр</option>
+            <option value="median">Медианный фильтр</option>
+            <option value="box">Усредняющий фильтр</option>
+        </select>
+
+        <label>Параметр сглаживания</label>
+        <input type="number" name="smoothing_parameter" min="1" max="15" value="3" required>
+
+        <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+
+        <button type="submit">Обработать</button>
+    </form>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>
