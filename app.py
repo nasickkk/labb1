@@ -3,7 +3,7 @@ from pathlib import Path
 
 import requests
 from flask import Flask, flash, redirect, render_template, request, url_for
-from PIL import Image, ImageChops, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 from werkzeug.utils import secure_filename
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -68,9 +68,22 @@ def denoise_image(image, method, smoothing_parameter):
 
     return image.filter(ImageFilter.GaussianBlur(radius=smoothing_parameter))
 
+def get_font(size):
+    """Загружает шрифт с поддержкой кириллицы."""
+    font_candidates = [
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/tahoma.ttf",
+        "C:/Windows/Fonts/calibri.ttf",
+    ]
+
+    for font_path in font_candidates:
+        if Path(font_path).exists():
+            return ImageFont.truetype(font_path, size=size)
+
+    return ImageFont.load_default()
 
 def build_histogram_chart(histograms, title, output_path, channel_names):
-    """Рисует простой график-гистограмму средствами Pillow"""
+    """Рисует простой график-гистограмму средствами Pillow без matplotlib и numpy."""
     width, height = 850, 520
     left, top, right, bottom = 80, 60, 40, 70
     plot_width = width - left - right
@@ -79,11 +92,16 @@ def build_histogram_chart(histograms, title, output_path, channel_names):
     image = Image.new("RGB", (width, height), "white")
     draw = ImageDraw.Draw(image)
 
-    draw.text((left, 20), title, fill="black")
+    title_font = get_font(22)
+    axis_font = get_font(16)
+    legend_font = get_font(15)
+
+    draw.text((left, 20), title, fill="black", font=title_font)
     draw.line((left, top, left, top + plot_height), fill="black", width=2)
     draw.line((left, top + plot_height, left + plot_width, top + plot_height), fill="black", width=2)
-    draw.text((left + 250, height - 35), "Интенсивность / величина отличия пикселя", fill="black")
-    draw.text((10, top + 180), "Количество", fill="black")
+
+    draw.text((left + 180, height - 35), "Интенсивность / величина отличия пикселя", fill="black", font=axis_font)
+    draw.text((10, top + 180), "Количество", fill="black", font=axis_font)
 
     colors = ["red", "green", "blue", "black"]
     max_value = max(max(histogram) for histogram in histograms) or 1
@@ -102,7 +120,7 @@ def build_histogram_chart(histograms, title, output_path, channel_names):
 
         legend_y = top + 25 + histogram_index * 20
         draw.line((left + 20, legend_y, left + 55, legend_y), fill=color, width=3)
-        draw.text((left + 65, legend_y - 8), channel_names[histogram_index], fill="black")
+        draw.text((left + 65, legend_y - 8), channel_names[histogram_index], fill="black", font=legend_font)
 
     image.save(output_path)
 
